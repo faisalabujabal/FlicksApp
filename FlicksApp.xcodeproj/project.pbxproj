@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3A5E5FDC1C533C69007C0D19 /* MoviesHomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5E5FDB1C533C69007C0D19 /* MoviesHomePageViewController.swift */; };
+		3A6120FD1C5EE51000A7EEF5 /* LoadingIncdicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6120FC1C5EE51000A7EEF5 /* LoadingIncdicator.swift */; };
 		3AB4DDA51C532A8A00AB6EC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4DDA41C532A8A00AB6EC2 /* AppDelegate.swift */; };
 		3AB4DDAA1C532A8A00AB6EC2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4DDA81C532A8A00AB6EC2 /* Main.storyboard */; };
 		3AB4DDAC1C532A8A00AB6EC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AB4DDAB1C532A8A00AB6EC2 /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		3A5E5FDB1C533C69007C0D19 /* MoviesHomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesHomePageViewController.swift; sourceTree = "<group>"; };
+		3A6120FC1C5EE51000A7EEF5 /* LoadingIncdicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingIncdicator.swift; sourceTree = "<group>"; };
 		3AB4DDA11C532A8A00AB6EC2 /* FlicksApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlicksApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AB4DDA41C532A8A00AB6EC2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3AB4DDA91C532A8A00AB6EC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -58,6 +60,14 @@
 			name = views;
 			sourceTree = "<group>";
 		};
+		3A6120F71C5EC1DC00A7EEF5 /* inc */ = {
+			isa = PBXGroup;
+			children = (
+				3A6120FC1C5EE51000A7EEF5 /* LoadingIncdicator.swift */,
+			);
+			name = inc;
+			sourceTree = "<group>";
+		};
 		3AB4DD981C532A8A00AB6EC2 = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +89,7 @@
 		3AB4DDA31C532A8A00AB6EC2 /* FlicksApp */ = {
 			isa = PBXGroup;
 			children = (
+				3A6120F71C5EC1DC00A7EEF5 /* inc */,
 				3A5E5FE11C545A71007C0D19 /* views */,
 				3A5E5FD81C5334C3007C0D19 /* viewControllers */,
 				3AB4DDA41C532A8A00AB6EC2 /* AppDelegate.swift */,
@@ -233,6 +244,7 @@
 				3AB4DDA51C532A8A00AB6EC2 /* AppDelegate.swift in Sources */,
 				3A5E5FDC1C533C69007C0D19 /* MoviesHomePageViewController.swift in Sources */,
 				3AD4575F1C57008C00BF9483 /* MovieListCell.swift in Sources */,
+				3A6120FD1C5EE51000A7EEF5 /* LoadingIncdicator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
