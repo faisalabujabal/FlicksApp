@@ -12,8 +12,6 @@ import AFNetworking
 class MoviesHomePageViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var moviesHomePageTableView: UITableView!
-    
-    
     var connectionErrors = false
     var loadedInfo = false
     var moviesList: [NSDictionary]? = nil
@@ -58,14 +56,14 @@ class MoviesHomePageViewController: UIViewController, UITableViewDataSource, UIT
                     if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                         data, options:[]) as? NSDictionary {
                             self.moviesList = responseDictionary["results"] as? [NSDictionary];
-//                            let delay = 4.5 * Double(NSEC_PER_SEC)
-//                            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-//                            dispatch_after(time, dispatch_get_main_queue()) {
+                            let delay = 2.5 * Double(NSEC_PER_SEC)
+                            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                            dispatch_after(time, dispatch_get_main_queue()) {
                                 dispatch_async(dispatch_get_main_queue()) {
                                     self.loadedInfo = true
                                     onSuccess()
                                 }
-//                            }
+                            }
                     }
                 }
         })
@@ -111,28 +109,14 @@ class MoviesHomePageViewController: UIViewController, UITableViewDataSource, UIT
         if(!connectionErrors){
             if(moviesList != nil){
                 movieCell.titleLabel.text = moviesList![indexPath.row]["title"] as? String;
+                
                 let imageBaseURL = "http://image.tmdb.org/t/p/w500/"
-                let imageURL = NSURL(string: imageBaseURL +
-                    (moviesList![indexPath.row]["poster_path"] as! String))
-                movieCell.moviePoster.setImageWithURL(imageURL!)
-                movieCell.releaseDateLabel.text = "Release date: " + (moviesList![indexPath.row]["release_date"] as? String)!
-                movieCell.overview.text = moviesList![indexPath.row]["overview"] as? String
-
-                var genreString: String = ""
-                let genreArray = moviesList![indexPath.row]["genre_ids"] as? [Int]
-                
-                
-                if(genreArray != nil){
-                    for genreID in genreArray!{
-                        if(genreString != ""){
-                            genreString = genreString + ", " + genreList[genreID]!
-                        } else {
-                            genreString = genreString + genreList[genreID]!
-                        }
-                    }
+                if let imageURL = NSURL(string: imageBaseURL +
+                    (moviesList![indexPath.row]["poster_path"] as! String)){
+                    movieCell.moviePoster.setImageWithURL(imageURL)
                 }
-                
-                movieCell.genreLabel.text = "Genres: " + genreString
+                movieCell.releaseDateLabel.text = "Release date: " + (moviesList![indexPath.row]["release_date"] as? String)!
+                movieCell.genreLabel.text = getGenresFromArray(indexPathRow: indexPath.row)
                 
             } else {
                 movieCell.titleLabel?.text = "Connection error"
@@ -151,6 +135,33 @@ class MoviesHomePageViewController: UIViewController, UITableViewDataSource, UIT
             }
         }
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let currCell = sender as? MovieListCell
+        let currCellIndexPath = moviesHomePageTableView.indexPathForCell(currCell!)
+        let currMovie = moviesList![currCellIndexPath!.row]
+        
+        let detailPage = segue.destinationViewController as! MovieDetailViewController
+        detailPage.movieDetails = currMovie
+        detailPage.genreString = getGenresFromArray(indexPathRow: (currCellIndexPath?.row)!)
+    }
+    
+    func getGenresFromArray(indexPathRow indexPathRow: Int) -> String? {
+        var genreString: String = ""
+        let genreArray = moviesList![indexPathRow]["genre_ids"] as? [Int]
+        
+        if(genreArray != nil){
+            for genreID in genreArray!{
+                if(genreString != ""){
+                    genreString = genreString + ", " + genreList[genreID]!
+                } else {
+                    genreString = genreString + genreList[genreID]!
+                }
+            }
+        }
+        return "Genres: " + genreString
+    }
+    
 }
 
 

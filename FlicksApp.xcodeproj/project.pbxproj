@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A0E3A161C60618600860F0E /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0E3A151C60618600860F0E /* MovieDetailViewController.swift */; };
 		3A5E5FDC1C533C69007C0D19 /* MoviesHomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5E5FDB1C533C69007C0D19 /* MoviesHomePageViewController.swift */; };
 		3A6120FD1C5EE51000A7EEF5 /* LoadingIncdicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A6120FC1C5EE51000A7EEF5 /* LoadingIncdicator.swift */; };
 		3AB4DDA51C532A8A00AB6EC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB4DDA41C532A8A00AB6EC2 /* AppDelegate.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3A0E3A151C60618600860F0E /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		3A5E5FDB1C533C69007C0D19 /* MoviesHomePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesHomePageViewController.swift; sourceTree = "<group>"; };
 		3A6120FC1C5EE51000A7EEF5 /* LoadingIncdicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingIncdicator.swift; sourceTree = "<group>"; };
 		3AB4DDA11C532A8A00AB6EC2 /* FlicksApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlicksApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,6 +50,7 @@
 			isa = PBXGroup;
 			children = (
 				3A5E5FDB1C533C69007C0D19 /* MoviesHomePageViewController.swift */,
+				3A0E3A151C60618600860F0E /* MovieDetailViewController.swift */,
 			);
 			name = viewControllers;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3AB4DDA51C532A8A00AB6EC2 /* AppDelegate.swift in Sources */,
+				3A0E3A161C60618600860F0E /* MovieDetailViewController.swift in Sources */,
 				3A5E5FDC1C533C69007C0D19 /* MoviesHomePageViewController.swift in Sources */,
 				3AD4575F1C57008C00BF9483 /* MovieListCell.swift in Sources */,
 				3A6120FD1C5EE51000A7EEF5 /* LoadingIncdicator.swift in Sources */,
