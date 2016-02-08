@@ -18,12 +18,18 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var backdropImage: UIImageView!
     @IBOutlet weak var releaseDateLabel: UILabel!
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var detailsView: UIView!
+    @IBOutlet var mainView: UIView!
     
     var movieDetails: NSDictionary? = nil
     var genreString: String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad();
+        
+        scrollView.contentSize = CGSize(width: scrollView.frame.size.width, height: mainView.frame.size.height + backdropImage.frame.height)
         
         let movieTitle = movieDetails!["title"] as? String
         
@@ -34,6 +40,8 @@ class MovieDetailViewController: UIViewController {
         navigationBar.title = movieTitle
         
         releaseDateLabel.text = "Release date: " + (movieDetails!["release_date"] as? String)!
+        let movieRating = movieDetails!["vote_average"] as! Int
+        ratingLabel.text = "Rating: \(movieRating)/10"
         
         let imageBaseURL = "http://image.tmdb.org/t/p/w500/"
         if let imageURL = NSURL(string: imageBaseURL +

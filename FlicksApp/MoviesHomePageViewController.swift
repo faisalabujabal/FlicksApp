@@ -17,17 +17,27 @@ class MoviesHomePageViewController: UIViewController, UITableViewDataSource, UIT
     var moviesList: [NSDictionary]? = nil
     var homepageMoviesRefreshController = UIRefreshControl()
     var genreList: Dictionary<Int, String> = [:]
+    var movieDatabaseEndpoint: String!
+    var viewControllerTitle: String!
+    
+    @IBAction func networkErrorButton(sender: UIButton) {
+            loadTableViewContent()
+    }
+    
+    @IBOutlet weak var networkErrorView: UIView!
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        networkErrorView.hidden = true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let homepageIndicator = LoadingIndicator()
-        homepageIndicator.showIndicator(parentView: moviesHomePageTableView)
-        getGenreNamesIDs(){
-            self.getNowPlayingMovies(){
-                self.moviesHomePageTableView.reloadData()
-                homepageIndicator.hideIndicator()
-            }
-        }
+        
+        loadTableViewContent()
+        
+        
+        self.title = viewControllerTitle
         moviesHomePageTableView.dataSource = self
         moviesHomePageTableView.delegate = self
         homepageMoviesRefreshController.addTarget(self, action: "refreshHomepageMoviesList:", forControlEvents: .ValueChanged)
@@ -40,10 +50,32 @@ class MoviesHomePageViewController: UIViewController, UITableViewDataSource, UIT
         // Dispose of any resources that can be recreated.
     }
     
+    func loadTableViewContent(){
+        let homepageIndicator = LoadingIndicator()
+        homepageIndicator.showIndicator(parentView: moviesHomePageTableView)
+        
+        func getGenreNamesSuccess(){
+            networkErrorView.hidden = true
+            getNowPlayingMovies(){
+                self.moviesHomePageTableView.reloadData()
+                homepageIndicator.hideIndicator()
+            }
+        }
+        
+        func getGenreNamesFail(){
+            
+            networkErrorView.hidden = false
+            
+            homepageIndicator.hideIndicator()
+        }
+        
+        getGenreNamesIDs(onSuccessFunction: getGenreNamesSuccess, onFailFunction: getGenreNamesFail)
+    }
+    
     func getNowPlayingMovies(onSuccessFunction onSuccess: () -> ()) {
         // Do any additional setup after loading the view.
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = NSURL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)&page=1")
+        let url = NSURL(string: "https://api.themoviedb.org/3/movie/\(movieDatabaseEndpoint)?api_key=\(apiKey)&page=1")
         let request = NSURLRequest(URL: url!)
         let session = NSURLSession(
             configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
@@ -56,41 +88,54 @@ class MoviesHomePageViewController: UIViewController, UITableViewDataSource, UIT
                     if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                         data, options:[]) as? NSDictionary {
                             self.moviesList = responseDictionary["results"] as? [NSDictionary];
-                            let delay = 2.5 * Double(NSEC_PER_SEC)
-                            let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-                            dispatch_after(time, dispatch_get_main_queue()) {
+                            //let delay = 1.5 * Double(NSEC_PER_SEC)
+                            //let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+                            //dispatch_after(time, dispatch_get_main_queue()) {
                                 dispatch_async(dispatch_get_main_queue()) {
                                     self.loadedInfo = true
                                     onSuccess()
                                 }
-                            }
+                            //}
                     }
                 }
         })
         task.resume()
     }
     
-    func getGenreNamesIDs(onSuccessFunction onSuccess: () -> () ){
+    func getGenreNamesIDs(onSuccessFunction onSuccess: () -> (), onFailFunction onFail: ()-> () ){
+        var networkError: Bool = true
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = NSURL(string: "http://api.themoviedb.org/3/genre/movie/list?api_key=\(apiKey)")!
-        let request = NSMutableURLRequest(URL: url)
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        let request = NSURLRequest(URL: url)
+        let session = NSURLSession(
+            configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
+            delegate: nil,
+            delegateQueue: NSOperationQueue.mainQueue()
+        )
+        let task: NSURLSessionDataTask = session.dataTaskWithRequest(request,
+            completionHandler: { (dataOrNil, response, error) in
+                if let data = dataOrNil {
+                    if let response = try! NSJSONSerialization.JSONObjectWithData(
+                        data, options:[]) as? NSDictionary {
         
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if let response = try! NSJSONSerialization.JSONObjectWithData(
-                data!, options:[]) as? NSDictionary {
-                let responseDict = (response["genres"] as? [NSDictionary]?)!
-                    
-                for genre in responseDict! {
-                    self.genreList[(genre["id"] as? Int)!] = (genre["name"] as? String)
+                        networkError = false;
+        
+                        let response = (response["genres"] as? [NSDictionary]?)!
+                        
+                        for genre in response! {
+                            self.genreList[(genre["id"] as? Int)!] = (genre["name"] as? String)
+                        }
+                            
+                                                
+                        dispatch_async(dispatch_get_main_queue()) {
+                            onSuccess()
+                        }
+                    }
                 }
-                    
-                    
-                dispatch_async(dispatch_get_main_queue()) {
-                    onSuccess()
-                }
-            }
+        })
+        
+        if(networkError){
+            onFail()
         }
         task.resume()
     }
@@ -110,13 +155,62 @@ class MoviesHomePageViewController: UIViewController, UITableViewDataSource, UIT
             if(moviesList != nil){
                 movieCell.titleLabel.text = moviesList![indexPath.row]["title"] as? String;
                 
-                let imageBaseURL = "http://image.tmdb.org/t/p/w500/"
-                if let imageURL = NSURL(string: imageBaseURL +
-                    (moviesList![indexPath.row]["poster_path"] as! String)){
-                    movieCell.moviePoster.setImageWithURL(imageURL)
-                }
+                let smallImageBase = "http://image.tmdb.org/t/p/w45/"
+                let largeImageBase = "http://image.tmdb.org/t/p/original/"
+                
+                let smallImageURL = NSURL(string: smallImageBase +
+                    (moviesList![indexPath.row]["poster_path"] as! String))
+                let largeImageURL = NSURL(string: largeImageBase +
+                    (moviesList![indexPath.row]["poster_path"] as! String))
+//                    movieCell.moviePoster.setImageWithURL(imageURL)
+               
+                
+                let smallImageRequest = NSURLRequest(URL: smallImageURL!)
+                let largeImageRequest = NSURLRequest(URL: largeImageURL!)
+                
+                movieCell.moviePoster.setImageWithURLRequest(
+                    smallImageRequest,
+                    placeholderImage: nil,
+                    success: { (smallImageRequest, smallImageResponse, smallImage) -> Void in
+                        
+                        // smallImageResponse will be nil if the smallImage is already available
+                        // in cache (might want to do something smarter in that case).
+                        movieCell.moviePoster.alpha = 0.0
+                        movieCell.moviePoster.image = smallImage;
+                        
+                        UIView.animateWithDuration(0.3, animations: { () -> Void in
+                            
+                            movieCell.moviePoster.alpha = 1.0
+                            
+                            }, completion: { (sucess) -> Void in
+                                
+                                // The AFNetworking ImageView Category only allows one request to be sent at a time
+                                // per ImageView. This code must be in the completion block.
+                                movieCell.moviePoster.setImageWithURLRequest(
+                                    largeImageRequest,
+                                    placeholderImage: smallImage,
+                                    success: { (largeImageRequest, largeImageResponse, largeImage) -> Void in
+                                        
+                                        movieCell.moviePoster.image = largeImage;
+                                        
+                                    },
+                                    failure: { (request, response, error) -> Void in
+                                        // do something for the failure condition of the large image request
+                                        // possibly setting the ImageView's image to a default image
+                                })
+                        })
+                    },
+                    failure: { (request, response, error) -> Void in
+                        // do something for the failure condition
+                        // possibly try to get the large image
+                })
+                
+                
+                
                 movieCell.releaseDateLabel.text = "Release date: " + (moviesList![indexPath.row]["release_date"] as? String)!
                 movieCell.genreLabel.text = getGenresFromArray(indexPathRow: indexPath.row)
+                let movieRating = moviesList![indexPath.row]["vote_average"] as! Int
+                movieCell.ratingLabel.text = "Rating: \(movieRating)/10"
                 
             } else {
                 movieCell.titleLabel?.text = "Connection error"

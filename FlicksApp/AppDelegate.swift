@@ -16,6 +16,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let nowPlayingNavigationController = storyboard.instantiateViewControllerWithIdentifier("moviesHomepageNavigationController") as! UINavigationController
+        let nowPlayingViewControler = nowPlayingNavigationController.topViewController as! MoviesHomePageViewController
+        nowPlayingViewControler.movieDatabaseEndpoint = "now_playing"
+        nowPlayingViewControler.viewControllerTitle = "Now Playing"
+        nowPlayingNavigationController.tabBarItem.title = "Now Playing"
+        nowPlayingNavigationController.tabBarItem.image = UIImage(named: "now_playing_icon")
+        
+        let topRatedNavigationController = storyboard.instantiateViewControllerWithIdentifier("moviesHomepageNavigationController") as! UINavigationController
+        let topRatedViewController = topRatedNavigationController.topViewController as! MoviesHomePageViewController
+        topRatedViewController.movieDatabaseEndpoint = "top_rated"
+        topRatedViewController.viewControllerTitle = "Top Rated"
+        topRatedNavigationController.tabBarItem.title = "Top Rated"
+        topRatedNavigationController.tabBarItem.image = UIImage(named: "top_rated_icon")
+        
+        let popularNavigationController = storyboard.instantiateViewControllerWithIdentifier("moviesHomepageNavigationController") as! UINavigationController
+        let popularViewController = popularNavigationController.topViewController as! MoviesHomePageViewController
+        popularViewController.movieDatabaseEndpoint = "popular"
+        popularViewController.viewControllerTitle = "Popular"
+        popularNavigationController.tabBarItem.title = "Popular"
+        popularNavigationController.tabBarItem.image = UIImage(named: "popular_icon")
+        
+        let upcomingNavigationController = storyboard.instantiateViewControllerWithIdentifier("moviesHomepageNavigationController") as! UINavigationController
+        let upcomingViewController = upcomingNavigationController.topViewController as! MoviesHomePageViewController
+        upcomingViewController.movieDatabaseEndpoint = "upcoming"
+        upcomingViewController.viewControllerTitle = "Upcoming"
+        upcomingNavigationController.tabBarItem.title = "Upcoming"
+        upcomingNavigationController.tabBarItem.image = UIImage(named: "upcoming_icon")
+        
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [nowPlayingNavigationController, topRatedNavigationController, popularNavigationController, upcomingNavigationController]
+        
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
+        
         return true
     }
 

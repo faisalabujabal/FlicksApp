@@ -16,5 +16,7 @@ class MovieListCell: UITableViewCell {
     
     @IBOutlet weak var releaseDateLabel: UILabel!
     
+    @IBOutlet weak var ratingLabel: UILabel!
+    
     @IBOutlet weak var genreLabel: UILabel!
 }
