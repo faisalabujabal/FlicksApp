@@ -101,7 +101,11 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+The hardest part was coming up with ideas to add to the app
+
+Sources of the icons:
+thenounproject.com
+Thanks to: Daouna Jeong, Studio Fibonacci, Xavier Girones, and Calvin Goodman
 
 ## License
 
