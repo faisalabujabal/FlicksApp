@@ -8,22 +8,22 @@ Time spent: 8 hours spent in total
 
 The following **required** functionality is complete:
 
-- [ yes ] User can view a list of movies currently playing in theaters from The Movie Database.
-- [ yes ] Poster images are loaded using the UIImageView category in the AFNetworking library.
-- [ yes ] User sees a loading state while waiting for the movies API.
-- [ yes ] User can pull to refresh the movie list.
+- [x] User can view a list of movies currently playing in theaters from The Movie Database.
+- [x] Poster images are loaded using the UIImageView category in the AFNetworking library.
+- [x] User sees a loading state while waiting for the movies API.
+- [x] User can pull to refresh the movie list.
 
 The following **optional** features are implemented:
 
-- [ yes ] User sees an error message when there's a networking error.
+- [x] User sees an error message when there's a networking error.
 - [ ] Movies are displayed using a CollectionView instead of a TableView.
 - [ ] User can search for a movie.
-- [ yes ] All images fade in as they are loading.
+- [x] All images fade in as they are loading.
 - [ ] Customize the UI.
 
 The following **additional** features are implemented:
 
-- [ yes ] added more data to each cell
+- [x] added more data to each cell
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
@@ -72,23 +72,23 @@ Time spent: 2 hours spent in total
 
 The following **required** functionality is completed:
 
-- [ yes ] User can view movie details by tapping on a cell.
-- [ yes ] User can select from a tab bar for either **Now Playing** or **Top Rated** movies.
-- [ yes ] Customize the selection effect of the cell.
+- [x] User can view movie details by tapping on a cell.
+- [x] User can select from a tab bar for either **Now Playing** or **Top Rated** movies.
+- [x] Customize the selection effect of the cell.
 
 The following **optional** features are implemented:
 
-- [ yes ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
-- [ yes ] Customize the navigation bar.
+- [x] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
+- [x] Customize the navigation bar.
 
 The following **additional** features are implemented:
 
-- [ yes ] the title of the tab bar view controllers change programmatically depending on what endpoint I am using
-- [ yes ] implemented two extra endpoints (upcoming and popular)
-- [ yes ] added a scroll view for the movie detail page
-- [ yes ] add a network error message from last week
-- [ yes ] images fade in if they are loaded from the network from last week
-- [ yes ] added an edge swipe gesture to return from the details viewer to the table view
+- [x] the title of the tab bar view controllers change programmatically depending on what endpoint I am using
+- [x] implemented two extra endpoints (upcoming and popular)
+- [x] added a scroll view for the movie detail page
+- [x] add a network error message from last week
+- [x] images fade in if they are loaded from the network from last week
+- [x] added an edge swipe gesture to return from the details viewer to the table view
 
 ## Video Walkthrough 
 
@@ -101,7 +101,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-The hardest part was coming up with ideas to add to the app
+The hardest part was coming up with ideas to add to the app, and learning about Closures so I can do actions on success and on fail of the retrival of the data from the movie database API.
 
 Sources of the icons:
 thenounproject.com
