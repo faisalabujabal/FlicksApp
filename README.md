@@ -15,10 +15,10 @@ The following **required** functionality is complete:
 
 The following **optional** features are implemented:
 
-- [ ] User sees an error message when there's a networking error.
+- [ yes ] User sees an error message when there's a networking error.
 - [ ] Movies are displayed using a CollectionView instead of a TableView.
 - [ ] User can search for a movie.
-- [ ] All images fade in as they are loading.
+- [ yes ] All images fade in as they are loading.
 - [ ] Customize the UI.
 
 The following **additional** features are implemented:
@@ -73,28 +73,29 @@ Time spent: 2 hours spent in total
 The following **required** functionality is completed:
 
 - [ yes ] User can view movie details by tapping on a cell.
-- [ ] User can select from a tab bar for either **Now Playing** or **Top Rated** movies.
-- [ ] Customize the selection effect of the cell.
+- [ yes ] User can select from a tab bar for either **Now Playing** or **Top Rated** movies.
+- [ yes ] Customize the selection effect of the cell.
 
 The following **optional** features are implemented:
 
-- [ ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
-- [ ] Customize the navigation bar.
+- [ yes ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
+- [ yes ] Customize the navigation bar.
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
-
-Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
-
-1. 
-2. 
+- [ yes ] the title of the tab bar view controllers change programmatically depending on what endpoint I am using
+- [ yes ] implemented two extra endpoints (upcoming and popular)
+- [ yes ] added a scroll view for the movie detail page
+- [ yes ] add a network error message from last week
+- [ yes ] images fade in if they are loaded from the network from last week
+- [ yes ] added an edge swipe gesture to return from the details viewer to the table view
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/q6hxGU2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/STLB7P6.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/vIE8wxZ.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
